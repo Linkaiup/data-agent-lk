@@ -1,0 +1,4 @@
+interface:
+  display_name: "Local Data Agent"
+  short_description: "Analyze local files with auditable evidence"
+  default_prompt: "Use $local-data-agent to analyze this dataset and create an evidence-backed report."

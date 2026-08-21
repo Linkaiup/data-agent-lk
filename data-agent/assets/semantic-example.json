@@ -1,0 +1,16 @@
+{
+  "source": "postgres",
+  "tables": {
+    "orders": {
+      "grain": "one row per order",
+      "dimensions": {
+        "order_date": "created_at",
+        "country": "shipping_country"
+      },
+      "metrics": {
+        "gross_revenue": "SUM(amount)"
+      },
+      "joins": []
+    }
+  }
+}
