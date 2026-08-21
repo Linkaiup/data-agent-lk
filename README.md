@@ -10,6 +10,33 @@
 - 使用 JSON 语义层固化表粒度、维度、指标和关联关系，并依据 catalog 校验。
 - 默认限制数据库返回 1,000 行，拒绝写入、DDL、多语句 SQL。
 
+## 模块协作
+
+`SKILL.md` 负责定义 Agent 的工作流程与安全约束；`scripts` 目录负责执行实际的数据读取、查询、校验与产物生成。
+
+```text
+用户问题 / Skill 指令
+        ↓
+analyze_data.py（CLI 编排）
+   ┌────┼────────────┐
+   ↓    ↓            ↓
+本地文件  database.py  semantic.py
+   ↓    ↓            ↓
+SQLite   远程数据库    catalog + 语义定义
+   └────┼────────────┘
+        ↓
+sql_safety.py（查询只读校验 + 行数限制）
+        ↓
+analysis.sql + result.csv + profile.json + report.md + chart.svg
+```
+
+| 模块 | 职责 |
+| --- | --- |
+| `analyze_data.py` | CLI 主入口；编排本地分析、数据库 catalog、数据库查询、语义层校验与报告输出。 |
+| `sql_safety.py` | 只允许单条 `SELECT`/`WITH`，拒绝写入、DDL、多语句，并为数据库查询补默认 `LIMIT 1000`。 |
+| `database.py` | 统一适配 PostgreSQL、MySQL、ClickHouse：读取环境变量、惰性加载驱动、读取 catalog、执行只读查询。 |
+| `semantic.py` | 读取并校验 JSON 语义层；使用 catalog 验证表、字段和关联关系。 |
+
 ## 安装
 
 将 `data-agent` 目录复制到对应工具的用户级 Skills 目录：
