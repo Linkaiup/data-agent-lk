@@ -1,1 +1,0 @@
-SELECT * FROM data LIMIT 100
