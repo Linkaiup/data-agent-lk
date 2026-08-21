@@ -1,9 +1,9 @@
 ---
-name: local-data-agent
+name: data-agent
 description: Use when analyzing local CSV, JSON, Excel, or Parquet datasets; answering questions with tabular data; profiling data quality; producing reproducible SQL-based findings, charts, or Markdown reports.
 ---
 
-# Local Data Agent
+# Data Agent Skill
 
 Use this skill to answer data questions from local files with traceable outputs. Treat every conclusion as evidence-backed: preserve the source, query, result, and assumptions.
 
